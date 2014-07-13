@@ -13,15 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yannart.validation.converter.impl;
+package com.yannart.validation.factory;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.yannart.validation.converter.ConstraintConverterFactory;
-import com.yannart.validation.converter.JSR303ConstraintConverter;
+import com.yannart.validation.JSR349ConstraintConverter;
+import com.yannart.validation.converter.MaxConverter;
+import com.yannart.validation.converter.MinConverter;
+import com.yannart.validation.converter.RequiredConverter;
+import com.yannart.validation.converter.SizeConverter;
 
 /**
  * Factory used to obtain the ConstraintConverters usable for a JSR303
@@ -29,12 +32,12 @@ import com.yannart.validation.converter.JSR303ConstraintConverter;
  * 
  * @author Yann Nicolas
  */
-public class ConstraintConverterFactoryImpl implements ConstraintConverterFactory {
+public class ConstraintConverterFactory {
 
 	/**
 	 * Default converters.
 	 */
-	static JSR303ConstraintConverter[] converters = new JSR303ConstraintConverter[] {
+	static JSR349ConstraintConverter[] converters = new JSR349ConstraintConverter[] {
 			new MaxConverter(),
 			new MinConverter(),
 			new RequiredConverter(),
@@ -44,13 +47,13 @@ public class ConstraintConverterFactoryImpl implements ConstraintConverterFactor
 	 * Map that is used for performance purposes and that allows finding all the
 	 * converters that can be used with a particular annotation.
 	 */
-	private Map<Class<?>, Set<JSR303ConstraintConverter>> validationConverterByAnnotationMap;
+	private Map<Class<?>, Set<JSR349ConstraintConverter>> validationConverterByAnnotationMap;
 
 	/**
 	 * Constructor.
 	 */
-	public ConstraintConverterFactoryImpl() {
-		validationConverterByAnnotationMap = new HashMap<Class<?>, Set<JSR303ConstraintConverter>>();
+	public ConstraintConverterFactory() {
+		validationConverterByAnnotationMap = new HashMap<Class<?>, Set<JSR349ConstraintConverter>>();
 		generateConverterMapByAnnotationClass();
 	}
 
@@ -60,28 +63,26 @@ public class ConstraintConverterFactoryImpl implements ConstraintConverterFactor
 	 */
 	protected void generateConverterMapByAnnotationClass() {
 
-		for (JSR303ConstraintConverter converter : converters) {
-
-			for (Class<?> convertedClass : converter.annotationClassConverted()) {
-
-				// Gets the existing set of converters or generating an new one
-				Set<JSR303ConstraintConverter> convertersForClass = validationConverterByAnnotationMap
-						.get(convertedClass);
-				if (convertersForClass == null) {
-					convertersForClass = new HashSet<JSR303ConstraintConverter>();
-				}
-				convertersForClass.add(converter);
-
-				validationConverterByAnnotationMap.put(convertedClass,
-						convertersForClass);
-			}
+		for (JSR349ConstraintConverter converter : converters) {
+            // Gets the existing set of converters or generating an new one
+            Set<JSR349ConstraintConverter> convertersForClass = ensureMapEntry( converter.annotationClassConverted());
+            convertersForClass.add(converter);
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.yannart.validation.converter.ConstraintConverterFactory#getConverterMapByAnnotationClass(java.lang.Class)
+    private Set<JSR349ConstraintConverter> ensureMapEntry( Class<?> convertedClass) {
+        Set<JSR349ConstraintConverter> result = validationConverterByAnnotationMap
+                .get(convertedClass);
+        if (result == null) {
+            result = new HashSet<JSR349ConstraintConverter>();
+            validationConverterByAnnotationMap.put(convertedClass, result);
+        }
+        return result;
+    }
+
+	/**
 	 */
-	public Set<JSR303ConstraintConverter> getConverterMapByAnnotationClass(
+	public Set<JSR349ConstraintConverter> getConverterMapByAnnotationClass(
 			final Class<?> annotationClass) {
 		return validationConverterByAnnotationMap.get(annotationClass);
 	}

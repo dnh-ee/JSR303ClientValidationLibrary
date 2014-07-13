@@ -13,40 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yannart.validation.converter.impl;
+package com.yannart.validation.converter;
 
-import java.lang.annotation.Annotation;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Max;
 
-import com.yannart.validation.ConstrainedProperty;
-import com.yannart.validation.converter.JSR303ConstraintConverter;
+import com.yannart.validation.model.ConstrainedProperty;
+import com.yannart.validation.JSR349ConstraintConverter;
 
 /**
- * Converter from the annotation <code>NotNull</code> to the attribute
- * "required".
+ * Converter from the annotation <code>Max</code> to the attribute "max".
  * 
  * @author Yann Nicolas
  */
-public class RequiredConverter implements JSR303ConstraintConverter {
+public class MaxConverter implements JSR349ConstraintConverter< Max> {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Class<?>[] annotationClassConverted() {
-		return new Class<?>[] { NotNull.class };
+	public Class annotationClassConverted() {
+		return Max.class;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void fillConstrainedPropertyAttributes(final Annotation annotation,
+	public void fillConstrainedPropertyAttributes(final Max max,
 			final Map<String, Object> attributes,
 			final ConstrainedProperty validatedProperty) {
 
-		if (annotation instanceof NotNull) {
-			validatedProperty.addAttribute("required", "true");
-		}
+		validatedProperty.addAttribute("max", Long.toString(max.value()));
 	}
 }

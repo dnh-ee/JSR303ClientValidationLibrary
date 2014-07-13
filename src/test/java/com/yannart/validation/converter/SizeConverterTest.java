@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yannart.validation.converter.impl;
+package com.yannart.validation.converter;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -25,10 +25,11 @@ import java.util.Map;
 
 import javax.validation.constraints.Size;
 
+import com.yannart.validation.converter.SizeConverter;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.yannart.validation.ConstrainedProperty;
+import com.yannart.validation.model.ConstrainedProperty;
 
 /**
  * Test for SizeConverter.
@@ -52,18 +53,18 @@ public class SizeConverterTest {
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.converter.impl.SizeConverter#annotationClassConverted()}
+	 * {@link com.yannart.validation.converter.SizeConverter#annotationClassConverted()}
 	 * .
 	 */
 	@Test
 	public void testAnnotationClassConverted() {
-		assertArrayEquals(new Class[] { Size.class },
-				sizeConverter.annotationClassConverted());
+		assertEquals(Size.class,
+                sizeConverter.annotationClassConverted());
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.converter.impl.SizeConverter#fillConstrainedPropertyAttributes(java.lang.annotation.Annotation, java.util.Map, com.yannart.validation.ConstrainedProperty)}
+	 * {@link com.yannart.validation.converter.SizeConverter#fillConstrainedPropertyAttributes(java.lang.annotation.Annotation, java.util.Map, com.yannart.validation.model.ConstrainedProperty)}
 	 * .
 	 */
 	@Test

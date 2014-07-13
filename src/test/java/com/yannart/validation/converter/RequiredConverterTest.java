@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yannart.validation.converter.impl;
+package com.yannart.validation.converter;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -24,10 +24,11 @@ import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
+import com.yannart.validation.converter.RequiredConverter;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.yannart.validation.ConstrainedProperty;
+import com.yannart.validation.model.ConstrainedProperty;
 
 /**
  * Test for RequiredConverter.
@@ -51,18 +52,18 @@ public class RequiredConverterTest {
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.converter.impl.RequiredConverter#annotationClassConverted()}
+	 * {@link com.yannart.validation.converter.RequiredConverter#annotationClassConverted()}
 	 * .
 	 */
 	@Test
 	public void testAnnotationClassConverted() {
-		assertArrayEquals(new Class[] { NotNull.class },
-				requiredConverter.annotationClassConverted());
+		assertEquals(NotNull.class,
+                requiredConverter.annotationClassConverted());
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.converter.impl.RequiredConverter#fillConstrainedPropertyAttributes(java.lang.annotation.Annotation, java.util.Map, com.yannart.validation.ConstrainedProperty)}
+	 * {@link com.yannart.validation.converter.RequiredConverter#fillConstrainedPropertyAttributes(java.lang.annotation.Annotation, java.util.Map, com.yannart.validation.model.ConstrainedProperty)}
 	 * .
 	 */
 	@Test

@@ -18,7 +18,7 @@ package com.yannart.validation.json;
 import java.util.Map;
 import java.util.Set;
 
-import com.yannart.validation.ConstrainedProperty;
+import com.yannart.validation.model.ConstrainedProperty;
 import com.yannart.validation.ConstraintDescriptorGenerator;
 
 /**

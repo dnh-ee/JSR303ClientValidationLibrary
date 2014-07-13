@@ -21,13 +21,13 @@ package com.yannart.validation;
  * 
  * @author Yann Nicolas
  */
-public interface JSR303ToConstraintDescriptor {
+public interface AnnotationToConstraintDescriptor {
 
 	/**
 	 * Generates a constraint descriptor from a class annotated with JSR303
 	 * annotations.
 	 * 
-	 * @param class class annotated with JSR303 annotations for which a
+	 * @param clazz class annotated with JSR303 annotations for which a
 	 *        descriptor is generated.
 	 * @return String that contents the generated code of the constraint
 	 *         descriptor.
@@ -38,7 +38,7 @@ public interface JSR303ToConstraintDescriptor {
 	 * Generates a constraint descriptor from a class annotated with JSR303
 	 * annotations.
 	 * 
-	 * @param class class annotated with JSR303 annotations to which a
+	 * @param clazz class annotated with JSR303 annotations to which a
 	 *        descriptor is generated.
 	 * @param propertiesToIgnore
 	 *            properties to ignore in the descriptor.

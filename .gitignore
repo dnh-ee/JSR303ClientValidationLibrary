@@ -2,4 +2,9 @@
 .project
 .settings
 target
+.idea
+.gradle
+build
+classes
+*.iml
 

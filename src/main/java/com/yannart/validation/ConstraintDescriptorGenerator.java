@@ -15,6 +15,8 @@
  */
 package com.yannart.validation;
 
+import com.yannart.validation.model.ConstrainedProperty;
+
 import java.util.Set;
 
 /**

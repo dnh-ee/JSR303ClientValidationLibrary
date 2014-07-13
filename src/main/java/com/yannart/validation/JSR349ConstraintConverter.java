@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yannart.validation.converter;
+package com.yannart.validation;
 
 import java.lang.annotation.Annotation;
 import java.util.Map;
 
-import com.yannart.validation.ConstrainedProperty;
+import com.yannart.validation.model.ConstrainedProperty;
 
 /**
  * Interface that defines the methods to be implemented by the converters that
@@ -27,16 +27,16 @@ import com.yannart.validation.ConstrainedProperty;
  * @author Yann Nicolas
  * 
  */
-public interface JSR303ConstraintConverter {
+public interface JSR349ConstraintConverter<T extends Annotation> {
 
 	/**
-	 * Obtain the list of JSR303 annotation classes that can be converted by
+	 * Obtain the JSR349 annotation class that is converted by
 	 * this converter.
 	 * 
-	 * @return an array of annotation classes that can be converted by this
+	 * @return the class that can be converted by this
 	 *         converter.
 	 */
-	Class<?>[] annotationClassConverted();
+	Class<T> annotationClassConverted();
 
 	/**
 	 * Fills a ConstrainedProperty with the attributes of a JSR303 annotation.
@@ -48,7 +48,7 @@ public interface JSR303ConstraintConverter {
 	 * @param constrainedProperty
 	 *            Property to fill with constraint attributes.
 	 */
-	void fillConstrainedPropertyAttributes(Annotation annotation,
+	void fillConstrainedPropertyAttributes(T annotation,
 			Map<String, Object> attributes,
 			ConstrainedProperty constrainedProperty);
 

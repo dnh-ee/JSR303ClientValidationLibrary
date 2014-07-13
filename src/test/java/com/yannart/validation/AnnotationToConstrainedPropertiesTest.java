@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yannart.validation.impl;
+package com.yannart.validation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -27,34 +27,31 @@ import javax.validation.Validation;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.yannart.validation.ConstrainedProperty;
-import com.yannart.validation.JSR303ToConstrainedProperties;
-import com.yannart.validation.User;
-import com.yannart.validation.converter.ConstraintConverterFactory;
-import com.yannart.validation.converter.impl.ConstraintConverterFactoryImpl;
+import com.yannart.validation.model.ConstrainedProperty;
+import com.yannart.validation.factory.ConstraintConverterFactory;
 
 /**
  * Test for JSR303ToConstrainedPropertiesImpl.
  * 
  * @author Yann Nicolas
  */
-public class JSR303ToConstrainedPropertiesImplTest {
+public class AnnotationToConstrainedPropertiesTest {
 
-	JSR303ToConstrainedProperties jsr303ToConstrainedProperties;
+	AnnotationToConstrainedProperties jsr303ToConstrainedProperties;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		jsr303ToConstrainedProperties = new JSR303ToConstrainedPropertiesImpl();
+		jsr303ToConstrainedProperties = new AnnotationToConstrainedProperties();
 		jsr303ToConstrainedProperties
-				.setConverterFactory(new ConstraintConverterFactoryImpl());
+				.setConverterFactory(new ConstraintConverterFactory());
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.impl.JSR303ToConstrainedPropertiesImpl#generateConstrainedProperties(java.lang.Class, javax.validation.Validator)}
+	 * {@link AnnotationToConstrainedProperties#generateConstrainedProperties(java.lang.Class, javax.validation.Validator)}
 	 * .
 	 */
 	@Test
@@ -102,7 +99,7 @@ public class JSR303ToConstrainedPropertiesImplTest {
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.impl.JSR303ToConstrainedPropertiesImpl#generateConstrainedProperties(java.lang.Class, javax.validation.Validator, java.lang.Array)}
+	 * {@link AnnotationToConstrainedProperties#generateConstrainedProperties(java.lang.Class, javax.validation.Validator, java.lang.String...)}
 	 * .
 	 */
 	@Test
@@ -143,14 +140,14 @@ public class JSR303ToConstrainedPropertiesImplTest {
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.impl.JSR303ToConstrainedPropertiesImpl#setConverterFactory(com.yannart.validation.converter.ConstraintConverterFactory)}
+	 * {@link AnnotationToConstrainedProperties#setConverterFactory(com.yannart.validation.factory.ConstraintConverterFactory)}
 	 * .
 	 */
 	@Test
 	public void testSetConverterFactory() {
 
-		ConstraintConverterFactory factory = new ConstraintConverterFactoryImpl();
-		JSR303ToConstrainedPropertiesImpl jsr303ToConstrainedProperties = new JSR303ToConstrainedPropertiesImpl();
+		ConstraintConverterFactory factory = new ConstraintConverterFactory();
+		AnnotationToConstrainedProperties jsr303ToConstrainedProperties = new AnnotationToConstrainedProperties();
 		jsr303ToConstrainedProperties.setConverterFactory(factory);
 		assertSame(factory, jsr303ToConstrainedProperties.getConverterFactory());
 	}

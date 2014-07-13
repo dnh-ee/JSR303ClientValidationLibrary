@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.yannart.validation.JSR303ToConstraintDescriptor;
+import com.yannart.validation.AnnotationToConstraintDescriptor;
 
 /**
  * Implementation of a decorator of JSR303ToConstraintDescriptor adding caching
@@ -30,14 +30,14 @@ import com.yannart.validation.JSR303ToConstraintDescriptor;
  * 
  * @author Yann Nicolas.
  */
-public class JSR303ToConstraintDescriptorCacheDecoratorImpl implements
-		JSR303ToConstraintDescriptor,
-		JSR303ToConstraintDescriptorCacheDecorator {
+public class AnnotationToConstraintDescriptorCacheDecoratorImpl implements
+        AnnotationToConstraintDescriptor,
+        AnnotationToConstraintDescriptorCacheDecorator {
 
 	/**
 	 * Wrapped JSR303ToConstraintDescriptor.
 	 */
-	private JSR303ToConstraintDescriptor wrappedJsr303ToConstraintDescriptor;
+	private AnnotationToConstraintDescriptor wrappedJsr303ToConstraintDescriptor;
 
 	/**
 	 * Map that maps a generated constraint descriptor with the parameters that
@@ -48,8 +48,8 @@ public class JSR303ToConstraintDescriptorCacheDecoratorImpl implements
 	/**
 	 * Constructor where the wrapped jsr303ToConstraintDescriptor is set.
 	 */
-	public JSR303ToConstraintDescriptorCacheDecoratorImpl(
-			final JSR303ToConstraintDescriptor wrappedJsr303ToConstraintDescriptor) {
+	public AnnotationToConstraintDescriptorCacheDecoratorImpl(
+            final AnnotationToConstraintDescriptor wrappedJsr303ToConstraintDescriptor) {
 		this.wrappedJsr303ToConstraintDescriptor = wrappedJsr303ToConstraintDescriptor;
 	}
 
@@ -143,7 +143,7 @@ public class JSR303ToConstraintDescriptorCacheDecoratorImpl implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final JSR303ToConstraintDescriptor getWrapped() {
+	public final AnnotationToConstraintDescriptor getWrapped() {
 		return wrappedJsr303ToConstraintDescriptor;
 	}
 }

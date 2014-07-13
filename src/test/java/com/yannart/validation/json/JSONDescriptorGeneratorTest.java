@@ -25,7 +25,7 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.yannart.validation.ConstrainedProperty;
+import com.yannart.validation.model.ConstrainedProperty;
 
 /**
  * Test for JSONDescriptorGenerator.

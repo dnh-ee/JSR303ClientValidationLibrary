@@ -15,7 +15,7 @@
  */
 package com.yannart.validation.cache;
 
-import com.yannart.validation.JSR303ToConstraintDescriptor;
+import com.yannart.validation.AnnotationToConstraintDescriptor;
 
 /**
  * Decorator of JSR303ToConstraintDescriptor adding caching support to avoid the
@@ -23,7 +23,7 @@ import com.yannart.validation.JSR303ToConstraintDescriptor;
  * 
  * @author Yann Nicolas.
  */
-public interface JSR303ToConstraintDescriptorCacheDecorator {
+public interface AnnotationToConstraintDescriptorCacheDecorator {
 
 	/**
 	 * {@inheritDoc} <br />
@@ -47,6 +47,6 @@ public interface JSR303ToConstraintDescriptorCacheDecorator {
 	 * 
 	 * @return the wrappedJsr303ToConstraintDescriptor
 	 */
-	public abstract JSR303ToConstraintDescriptor getWrapped();
+	public abstract AnnotationToConstraintDescriptor getWrapped();
 
 }

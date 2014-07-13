@@ -13,42 +13,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yannart.validation.converter.impl;
+package com.yannart.validation.converter;
 
-import java.lang.annotation.Annotation;
 import java.util.Map;
 
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
-import com.yannart.validation.ConstrainedProperty;
-import com.yannart.validation.converter.JSR303ConstraintConverter;
+import com.yannart.validation.JSR349ConstraintConverter;
+import com.yannart.validation.model.ConstrainedProperty;
 
 /**
- * Converter from the annotation <code>Min</code> to the attribute "min".
+ * Converter from the annotation <code>Size</code> to the attributes "minlength"
+ * and "maxlength".
  * 
  * @author Yann Nicolas
  */
-public class MinConverter implements JSR303ConstraintConverter {
+public class SizeConverter implements JSR349ConstraintConverter<Size> {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Class<?>[] annotationClassConverted() {
-		return new Class<?>[] { Min.class };
+	public Class annotationClassConverted() {
+		return Size.class;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void fillConstrainedPropertyAttributes(final Annotation annotation,
+	public void fillConstrainedPropertyAttributes(final Size annotation,
 			final Map<String, Object> attributes,
 			final ConstrainedProperty validatedProperty) {
 
-		if (annotation instanceof Min) {
+        if (attributes.containsKey("min")) {
+            validatedProperty.addAttribute("minlength",
+                    attributes.get("min").toString());
+        }
 
-			Min min = (Min) annotation;
-
-			validatedProperty.addAttribute("min", Long.toString(min.value()));
-		}
+        if (attributes.containsKey("max")) {
+            validatedProperty.addAttribute("maxlength",
+                    attributes.get("max").toString());
+        }
 	}
 }

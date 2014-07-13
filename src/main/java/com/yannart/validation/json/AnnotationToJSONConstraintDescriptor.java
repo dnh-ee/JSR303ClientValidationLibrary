@@ -15,9 +15,9 @@
  */
 package com.yannart.validation.json;
 
-import com.yannart.validation.AbstractJSR303ToConstraintDescriptor;
-import com.yannart.validation.cache.JSR303ToConstraintDescriptorCacheDecorator;
-import com.yannart.validation.cache.JSR303ToConstraintDescriptorCacheDecoratorImpl;
+import com.yannart.validation.AbstractAnnotationToConstraintDescriptor;
+import com.yannart.validation.cache.AnnotationToConstraintDescriptorCacheDecorator;
+import com.yannart.validation.cache.AnnotationToConstraintDescriptorCacheDecoratorImpl;
 
 /**
  * Generates a JSON constraint descriptor following the syntax of the client
@@ -26,23 +26,23 @@ import com.yannart.validation.cache.JSR303ToConstraintDescriptorCacheDecoratorIm
  * 
  * @author Yann Nicolas
  */
-public class JSR303ToJSONConstraintDescriptor extends
-		AbstractJSR303ToConstraintDescriptor {
+public class AnnotationToJSONConstraintDescriptor extends
+        AbstractAnnotationToConstraintDescriptor {
 
 	/**
 	 * Instance.
 	 */
-	private static JSR303ToJSONConstraintDescriptor instance;
+	private static AnnotationToJSONConstraintDescriptor instance;
 
 	/**
 	 * Instance with caching capability.
 	 */
-	private static JSR303ToConstraintDescriptorCacheDecorator instanceWithCache;
+	private static AnnotationToConstraintDescriptorCacheDecorator instanceWithCache;
 
 	/**
 	 * Constructor where the output JSON is formatted.
 	 */
-	public JSR303ToJSONConstraintDescriptor() {
+	public AnnotationToJSONConstraintDescriptor() {
 		this(true);
 	}
 
@@ -53,7 +53,7 @@ public class JSR303ToJSONConstraintDescriptor extends
 	 *            flag to indicate if the JSON code must be formatted or not.
 	 *            True to format the output, false to not format the output.
 	 */
-	public JSR303ToJSONConstraintDescriptor(final boolean format) {
+	public AnnotationToJSONConstraintDescriptor(final boolean format) {
 		super(new JSONDescriptorGenerator(format));
 	}
 
@@ -63,9 +63,9 @@ public class JSR303ToJSONConstraintDescriptor extends
 	 * 
 	 * @return an instance of JSR303ToJSONConstraintDescriptor.
 	 */
-	public static JSR303ToJSONConstraintDescriptor getInstance() {
+	public static AnnotationToJSONConstraintDescriptor getInstance() {
 		if (instance == null) {
-			instance = new JSR303ToJSONConstraintDescriptor();
+			instance = new AnnotationToJSONConstraintDescriptor();
 		}
 		return instance;
 	}
@@ -78,9 +78,9 @@ public class JSR303ToJSONConstraintDescriptor extends
 	 * @return an instance of JSR303ToJSONConstraintDescriptor with caching
 	 *         capability
 	 */
-	public static JSR303ToConstraintDescriptorCacheDecorator getCachedInstance() {
+	public static AnnotationToConstraintDescriptorCacheDecorator getCachedInstance() {
 		if (instanceWithCache == null) {
-			instanceWithCache = new JSR303ToConstraintDescriptorCacheDecoratorImpl(
+			instanceWithCache = new AnnotationToConstraintDescriptorCacheDecoratorImpl(
 					getInstance());
 		}
 		return instanceWithCache;

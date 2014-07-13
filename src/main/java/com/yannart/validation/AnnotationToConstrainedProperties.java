@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yannart.validation.impl;
+package com.yannart.validation;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
@@ -27,36 +27,49 @@ import javax.validation.metadata.BeanDescriptor;
 import javax.validation.metadata.ConstraintDescriptor;
 import javax.validation.metadata.PropertyDescriptor;
 
-import com.yannart.validation.ConstrainedProperty;
-import com.yannart.validation.JSR303ToConstrainedProperties;
-import com.yannart.validation.converter.ConstraintConverterFactory;
-import com.yannart.validation.converter.JSR303ConstraintConverter;
+import com.yannart.validation.model.ConstrainedProperty;
+import com.yannart.validation.factory.ConstraintConverterFactory;
 
 /**
  * Convert a class annotated with JSR303 to a Set of constrained properties.
  * 
  * @author Yann Nicolas
  */
-public class JSR303ToConstrainedPropertiesImpl implements
-		JSR303ToConstrainedProperties {
+public class AnnotationToConstrainedProperties {
 
 	/**
 	 * Factory used to obtain the converter instances.
 	 */
 	private ConstraintConverterFactory converterFactory;
 
-	/**
-	 * {@inheritDoc}
-	 */
+    /**
+     * Generates a set of constrained properties from a Bean class annotated
+     * with JRE303 annotations.
+     *
+     * @param clazz
+     *            Class of the Bean.
+     * @param validator
+     *            Validator used to find the Bean constraints.
+     * @return A set of constrained properties.
+     */
 	public Set<ConstrainedProperty> generateConstrainedProperties(
 			final Class<?> clazz, final Validator validator) {
 
 		return generateConstrainedProperties(clazz, validator, new String [] {});
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+    /**
+     * Generates a set of constrained properties from a Bean class annotated
+     * with JRE303 annotations.
+     *
+     * @param clazz
+     *            Class of the Bean.
+     * @param validator
+     *            Validator used to find the Bean constraints.
+     * @param propertiesToIgnore
+     *            Properties to ignore from the generation.
+     * @return A set of constrained properties.
+     */
 	public Set<ConstrainedProperty> generateConstrainedProperties(
 			final Class<?> clazz, final Validator validator,
 			final String... propertiesToIgnore) {
@@ -95,7 +108,7 @@ public class JSR303ToConstrainedPropertiesImpl implements
 							.getAttributes();
 
 					// Get all the converters capable to trait the annotation
-					Set<JSR303ConstraintConverter> converters = converterFactory
+					Set<JSR349ConstraintConverter> converters = converterFactory
 							.getConverterMapByAnnotationClass(annotation
 									.annotationType());
 
@@ -103,7 +116,7 @@ public class JSR303ToConstrainedPropertiesImpl implements
 					// the
 					// property
 					if (converters != null) {
-						for (JSR303ConstraintConverter converter : converters) {
+						for (JSR349ConstraintConverter converter : converters) {
 							converter.fillConstrainedPropertyAttributes(
 									annotation, attributes, property);
 						}
@@ -121,9 +134,12 @@ public class JSR303ToConstrainedPropertiesImpl implements
 		return propertySet;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+    /**
+     * Sets the Converter Factory to use when converting the data.
+     *
+     * @param converterFactory
+     *            the converterFactory to set.
+     */
 	public void setConverterFactory(ConstraintConverterFactory converterFactory) {
 		this.converterFactory = converterFactory;
 	}

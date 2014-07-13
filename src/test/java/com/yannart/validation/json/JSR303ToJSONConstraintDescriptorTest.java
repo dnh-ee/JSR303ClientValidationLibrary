@@ -34,69 +34,69 @@ public class JSR303ToJSONConstraintDescriptorTest {
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.json.JSR303ToJSONConstraintDescriptor#getInstance()}
+	 * {@link AnnotationToJSONConstraintDescriptor#getInstance()}
 	 * .
 	 */
 	@Test
 	public final void testGetInstance() {
 
 		// The instance created must be always the same.
-		assertSame(JSR303ToJSONConstraintDescriptor.getInstance(),
-				JSR303ToJSONConstraintDescriptor.getInstance());
+		assertSame(AnnotationToJSONConstraintDescriptor.getInstance(),
+				AnnotationToJSONConstraintDescriptor.getInstance());
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.json.JSR303ToJSONConstraintDescriptor#getCachedInstance()}
+	 * {@link AnnotationToJSONConstraintDescriptor#getCachedInstance()}
 	 * .
 	 */
 	@Test
 	public final void testGetCachedInstance() {
 
 		// The instance created must be always the same.
-		assertSame(JSR303ToJSONConstraintDescriptor.getCachedInstance(),
-				JSR303ToJSONConstraintDescriptor.getCachedInstance());
+		assertSame(AnnotationToJSONConstraintDescriptor.getCachedInstance(),
+				AnnotationToJSONConstraintDescriptor.getCachedInstance());
 
 		// The wrapped object is the same instance that can be obtained with the
 		// getInstance method
-		assertSame(JSR303ToJSONConstraintDescriptor.getInstance(),
-				JSR303ToJSONConstraintDescriptor.getCachedInstance()
+		assertSame(AnnotationToJSONConstraintDescriptor.getInstance(),
+				AnnotationToJSONConstraintDescriptor.getCachedInstance()
 						.getWrapped());
 
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.AbstractJSR303ToConstraintDescriptor#render(java.lang.Class)}
+	 * {@link com.yannart.validation.AbstractAnnotationToConstraintDescriptor#render(java.lang.Class)}
 	 * .
 	 */
 	@Test
 	public final void testRenderClassOfQ() {
-		JSR303ToJSONConstraintDescriptor jsr303ToJSONConstraintDescriptor = new JSR303ToJSONConstraintDescriptor(
+		AnnotationToJSONConstraintDescriptor jsr303ToJSONConstraintDescriptor = new AnnotationToJSONConstraintDescriptor(
 				false);
 
 		String json = jsr303ToJSONConstraintDescriptor.render(Order.class);
 
 		assertEquals(
-				"rules:{alreadyPayed:{min:0,max:99},mealName:{required:true,minlength:4,maxlength:40},price:{min:0,max:99},waiterName:{required:true}}",
+				"rules:{alreadyPaid:{max:99,min:0},mealName:{maxlength:40,minlength:4,required:true},price:{max:99,min:0},waiterName:{required:true}}",
 				json);
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.AbstractJSR303ToConstraintDescriptor#render(java.lang.Class, java.lang.String[])}
+	 * {@link com.yannart.validation.AbstractAnnotationToConstraintDescriptor#render(java.lang.Class, java.lang.String[])}
 	 * .
 	 */
 	@Test
 	public final void testRenderClassOfQStringArray() {
-		JSR303ToJSONConstraintDescriptor jsr303ToJSONConstraintDescriptor = new JSR303ToJSONConstraintDescriptor(
+		AnnotationToJSONConstraintDescriptor jsr303ToJSONConstraintDescriptor = new AnnotationToJSONConstraintDescriptor(
 				false);
 
 		String json = jsr303ToJSONConstraintDescriptor.render(Order.class,
 				new String[] { "waiterName" });
 
 		assertEquals(
-				"rules:{alreadyPayed:{min:0,max:99},mealName:{required:true,minlength:4,maxlength:40},price:{min:0,max:99}}",
+				"rules:{alreadyPaid:{max:99,min:0},mealName:{maxlength:40,minlength:4,required:true},price:{max:99,min:0}}",
 				json);
 	}
 
@@ -119,5 +119,5 @@ class Order {
 
 	@Min(0)
 	@Max(99)
-	Integer alreadyPayed;
+	Integer alreadyPaid;
 }

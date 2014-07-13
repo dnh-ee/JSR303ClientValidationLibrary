@@ -20,9 +20,8 @@ import java.util.Set;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
-import com.yannart.validation.converter.ConstraintConverterFactory;
-import com.yannart.validation.converter.impl.ConstraintConverterFactoryImpl;
-import com.yannart.validation.impl.JSR303ToConstrainedPropertiesImpl;
+import com.yannart.validation.factory.ConstraintConverterFactory;
+import com.yannart.validation.model.ConstrainedProperty;
 
 /**
  * Abstract method that contains the logic to render a constraint descriptor
@@ -31,18 +30,18 @@ import com.yannart.validation.impl.JSR303ToConstrainedPropertiesImpl;
  * @author Yann Nicolas
  * 
  */
-public class AbstractJSR303ToConstraintDescriptor implements
-		JSR303ToConstraintDescriptor {
+public class AbstractAnnotationToConstraintDescriptor implements
+        AnnotationToConstraintDescriptor {
 
 	/**
 	 * Obtains a set of constrained properties from JSR303 annotations.
 	 */
-	JSR303ToConstrainedProperties jsr303ToConstrainedProperties = new JSR303ToConstrainedPropertiesImpl();
+	AnnotationToConstrainedProperties jsr303ToConstrainedProperties = new AnnotationToConstrainedProperties();
 
 	/**
 	 * Constraint converter factory.
 	 */
-	ConstraintConverterFactory constraintConverterFactory = new ConstraintConverterFactoryImpl();
+	ConstraintConverterFactory constraintConverterFactory = new ConstraintConverterFactory();
 
 	/**
 	 * Generator of constraint descriptor.
@@ -61,8 +60,8 @@ public class AbstractJSR303ToConstraintDescriptor implements
 	 * @param constraintDescriptorGenerator
 	 *            the descriptor generator to use.
 	 */
-	public AbstractJSR303ToConstraintDescriptor(
-			final ConstraintDescriptorGenerator constraintDescriptorGenerator) {
+	public AbstractAnnotationToConstraintDescriptor(
+            final ConstraintDescriptorGenerator constraintDescriptorGenerator) {
 		this.constraintDescriptorGenerator = constraintDescriptorGenerator;
 
 		jsr303ToConstrainedProperties
@@ -110,7 +109,7 @@ public class AbstractJSR303ToConstraintDescriptor implements
 	/**
 	 * @return the jsr303ToConstrainedProperties
 	 */
-	public final JSR303ToConstrainedProperties getJsr303ToConstrainedProperties() {
+	public final AnnotationToConstrainedProperties getJsr303ToConstrainedProperties() {
 		return jsr303ToConstrainedProperties;
 	}
 
@@ -126,7 +125,7 @@ public class AbstractJSR303ToConstraintDescriptor implements
 	 *            the jsr303ToConstrainedProperties to set
 	 */
 	public final void setJsr303ToConstrainedProperties(
-			final JSR303ToConstrainedProperties jsr303ToConstrainedProperties) {
+			final AnnotationToConstrainedProperties jsr303ToConstrainedProperties) {
 		this.jsr303ToConstrainedProperties = jsr303ToConstrainedProperties;
 	}
 

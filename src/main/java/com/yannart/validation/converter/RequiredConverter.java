@@ -15,25 +15,35 @@
  */
 package com.yannart.validation.converter;
 
-import java.util.Set;
+import java.util.Map;
+
+import javax.validation.constraints.NotNull;
+
+import com.yannart.validation.model.ConstrainedProperty;
+import com.yannart.validation.JSR349ConstraintConverter;
 
 /**
- * Interface of factories capable of getting the appropriate converters to
- * convert properties with annotations.
+ * Converter from the annotation <code>NotNull</code> to the attribute
+ * "required".
  * 
  * @author Yann Nicolas
  */
-public interface ConstraintConverterFactory {
+public class RequiredConverter implements JSR349ConstraintConverter<NotNull> {
 
 	/**
-	 * Obtain a set of converters usable to convert the provided annotation.
-	 * 
-	 * @param annotationClass
-	 *            class of the annotation for which supported converters are
-	 *            searched.
-	 * @return set of converters usable to convert the provided annotation.
+	 * {@inheritDoc}
 	 */
-	public abstract Set<JSR303ConstraintConverter> getConverterMapByAnnotationClass(
-			final Class<?> annotationClass);
+	public Class annotationClassConverted() {
+		return NotNull.class;
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public void fillConstrainedPropertyAttributes(final NotNull annotation,
+			final Map<String, Object> attributes,
+			final ConstrainedProperty validatedProperty) {
+
+		validatedProperty.addAttribute("required", "true");
+	}
 }

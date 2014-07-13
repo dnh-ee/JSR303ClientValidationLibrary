@@ -17,6 +17,7 @@ package com.yannart.validation;
 
 import static org.junit.Assert.*;
 
+import com.yannart.validation.model.ConstrainedProperty;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,7 +44,7 @@ public class ConstrainedPropertyTest {
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.ConstrainedProperty#ConstrainedProperty(java.lang.String)}
+	 * {@link com.yannart.validation.model.ConstrainedProperty#ConstrainedProperty(java.lang.String)}
 	 * .
 	 */
 	@Test
@@ -53,7 +54,7 @@ public class ConstrainedPropertyTest {
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.ConstrainedProperty#addAttribute(java.lang.String, java.lang.String)}
+	 * {@link com.yannart.validation.model.ConstrainedProperty#addAttribute(java.lang.String, java.lang.String)}
 	 * .
 	 */
 	@Test
@@ -65,7 +66,7 @@ public class ConstrainedPropertyTest {
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.ConstrainedProperty#getAttributeNumber()}.
+	 * {@link com.yannart.validation.model.ConstrainedProperty#getAttributeNumber()}.
 	 */
 	@Test
 	public void testGetAttributeNumber() {
@@ -80,7 +81,7 @@ public class ConstrainedPropertyTest {
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.ConstrainedProperty#getName()}.
+	 * {@link com.yannart.validation.model.ConstrainedProperty#getName()}.
 	 */
 	@Test
 	public void testGetName() {
@@ -89,7 +90,7 @@ public class ConstrainedPropertyTest {
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.ConstrainedProperty#getAttributeMap()}.
+	 * {@link com.yannart.validation.model.ConstrainedProperty#getAttributeMap()}.
 	 */
 	@Test
 	public void testGetAttributeMap() {

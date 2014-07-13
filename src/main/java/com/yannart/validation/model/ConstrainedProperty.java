@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yannart.validation;
+package com.yannart.validation.model;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Class that represents a property with a list of constraint attributes. The
@@ -33,11 +33,14 @@ public class ConstrainedProperty implements Comparable<ConstrainedProperty>{
 	 */
 	private String name;
 
+    /** allows ordering of properties in output to be overridden */
+    private int priority = 0;
+
 	/**
 	 * Map that constraints the attributes of the property. The key is the
 	 * attribute name, the value is the attribute value.
 	 */
-	private Map<String, String> attributeMap = new LinkedHashMap <String, String>();
+	private Map<String, String> attributeMap = new TreeMap<>();
 
 	/**
 	 * Constructor of the Property with an immutable name.
@@ -79,7 +82,15 @@ public class ConstrainedProperty implements Comparable<ConstrainedProperty>{
 		return name;
 	}
 
-	/**
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    /**
 	 * Obtains the property attributes map.
 	 * 
 	 * @return the property attributes map.
@@ -89,7 +100,9 @@ public class ConstrainedProperty implements Comparable<ConstrainedProperty>{
 	}
 
 	public int compareTo(final ConstrainedProperty other) {
-		
-		return name.compareTo(other.name);
+		if( priority == other.priority) {
+            return name.compareTo(other.name);
+        }
+        return priority - other.priority;
 	}
 }
