@@ -19,13 +19,14 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.yannart.validation.converter.SizeConverter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,14 +42,11 @@ public class SizeConverterTest {
 	/**
 	 * Tested object.
 	 */
-	SizeConverter sizeConverter;
+	SizeConverter converter;
 
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@Before
-	public void setUp() throws Exception {
-		sizeConverter = new SizeConverter();
+	public void setUp() {
+		converter = new SizeConverter();
 	}
 
 	/**
@@ -59,7 +57,7 @@ public class SizeConverterTest {
 	@Test
 	public void testAnnotationClassConverted() {
 		assertEquals(Size.class,
-                sizeConverter.annotationClassConverted());
+                converter.annotationClassConverted());
 	}
 
 	/**
@@ -71,22 +69,24 @@ public class SizeConverterTest {
 	public void testFillConstrainedPropertyAttributes() {
 
 		ConstrainedProperty property = new ConstrainedProperty("property");
-		Map<String, Object> attributeMap = new HashMap<String, Object>();
-		Size size = mock(Size.class);
+		Map<String, Object> attributeMap = new HashMap<>();
 
 		// Test with no attribute
-		sizeConverter.fillConstrainedPropertyAttributes(size, attributeMap,
-				property);
+        Size annotation = mock(Size.class);
+        converter.fillConstrainedPropertyAttributes( annotation, attributeMap,
+                property);
+        assertEquals(0, property.getAttributeMap().size());
 		assertNull(property.getAttributeMap().get("minlength"));
 		assertNull(property.getAttributeMap().get("maxlength"));
 
 		// Test just a Max attribute
 		property.getAttributeMap().clear();
 		attributeMap.clear();
-		attributeMap.put("max", 123);
+        attributeMap.put("max", 123);
 
-		sizeConverter.fillConstrainedPropertyAttributes(size, attributeMap,
-				property);
+		converter.fillConstrainedPropertyAttributes(annotation, attributeMap,
+                property);
+        assertEquals(1, property.getAttributeMap().size());
 		assertEquals("123", property.getAttributeMap().get("maxlength"));
 		assertNull(property.getAttributeMap().get("minlength"));
 
@@ -95,8 +95,9 @@ public class SizeConverterTest {
 		attributeMap.clear();
 		attributeMap.put("min", 1);
 
-		sizeConverter.fillConstrainedPropertyAttributes(size, attributeMap,
-				property);
+		converter.fillConstrainedPropertyAttributes(annotation, attributeMap,
+                property);
+        assertEquals(1, property.getAttributeMap().size());
 		assertEquals("1", property.getAttributeMap().get("minlength"));
 		assertNull(property.getAttributeMap().get("maxlength"));
 
@@ -106,8 +107,9 @@ public class SizeConverterTest {
 		attributeMap.put("min", 10);
 		attributeMap.put("max", 20);
 
-		sizeConverter.fillConstrainedPropertyAttributes(size, attributeMap,
-				property);
+		converter.fillConstrainedPropertyAttributes(annotation, attributeMap,
+                property);
+        assertEquals(2, property.getAttributeMap().size());
 		assertEquals("10", property.getAttributeMap().get("minlength"));
 		assertEquals("20", property.getAttributeMap().get("maxlength"));
 	}

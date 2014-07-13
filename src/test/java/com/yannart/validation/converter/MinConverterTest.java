@@ -24,7 +24,6 @@ import java.util.Map;
 
 import javax.validation.constraints.Min;
 
-import com.yannart.validation.converter.MinConverter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,14 +39,11 @@ public class MinConverterTest {
 	/**
 	 * Tested object.
 	 */
-	MinConverter minConverter;
+	MinConverter converter;
 
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@Before
-	public void setUp() throws Exception {
-		minConverter = new MinConverter();
+	public void setUp() {
+		converter = new MinConverter();
 	}
 
 	/**
@@ -58,7 +54,7 @@ public class MinConverterTest {
 	@Test
 	public void testAnnotationClassConverted() {
 		assertEquals(Min.class,
-                minConverter.annotationClassConverted());
+                converter.annotationClassConverted());
 	}
 
 	/**
@@ -69,14 +65,15 @@ public class MinConverterTest {
 	@Test
 	public void testFillConstrainedPropertyAttributes() {
 		ConstrainedProperty property = new ConstrainedProperty("property");
-		Map<String, Object> attributeMap = new HashMap<String, Object>();
+		Map<String, Object> attributeMap = new HashMap<>();
 
 		Min min = mock(Min.class);
 		when(min.value()).thenReturn(1L);
 
-		minConverter.fillConstrainedPropertyAttributes(min, attributeMap,
-				property);
-		assertEquals("1", property.getAttributeMap().get("min"));
+		converter.fillConstrainedPropertyAttributes(min, attributeMap,
+                property);
+        assertEquals( 1, property.getAttributeMap().size());
+        assertEquals("1", property.getAttributeMap().get("min"));
 	}
 
 }

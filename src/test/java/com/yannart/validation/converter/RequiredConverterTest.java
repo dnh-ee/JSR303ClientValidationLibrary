@@ -24,7 +24,6 @@ import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
-import com.yannart.validation.converter.RequiredConverter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,14 +39,11 @@ public class RequiredConverterTest {
 	/**
 	 * Tested object.
 	 */
-	RequiredConverter requiredConverter;
+	RequiredConverter converter;
 
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@Before
-	public void setUp() throws Exception {
-		requiredConverter = new RequiredConverter();
+	public void setUp() {
+		converter = new RequiredConverter();
 	}
 
 	/**
@@ -57,8 +53,7 @@ public class RequiredConverterTest {
 	 */
 	@Test
 	public void testAnnotationClassConverted() {
-		assertEquals(NotNull.class,
-                requiredConverter.annotationClassConverted());
+		assertEquals(NotNull.class, converter.annotationClassConverted());
 	}
 
 	/**
@@ -69,12 +64,13 @@ public class RequiredConverterTest {
 	@Test
 	public void testFillConstrainedPropertyAttributes() {
 		ConstrainedProperty property = new ConstrainedProperty("property");
-		Map<String, Object> attributeMap = new HashMap<String, Object>();
+		Map<String, Object> attributeMap = new HashMap<>();
 
 		NotNull notNull = mock(NotNull.class);
 
-		requiredConverter.fillConstrainedPropertyAttributes(notNull,
-				attributeMap, property);
+		converter.fillConstrainedPropertyAttributes(notNull,
+                attributeMap, property);
+        assertEquals( 1, property.getAttributeMap().size());
 		assertEquals("true", property.getAttributeMap().get("required"));
 	}
 

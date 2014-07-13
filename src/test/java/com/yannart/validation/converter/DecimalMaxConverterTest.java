@@ -15,51 +15,50 @@
  */
 package com.yannart.validation.converter;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.validation.constraints.Max;
-
+import com.yannart.validation.model.ConstrainedProperty;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.yannart.validation.model.ConstrainedProperty;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.Max;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Test for MaxConverter.
  * 
  * @author Yann Nicolas
  */
-public class MaxConverterTest {
+public class DecimalMaxConverterTest {
 
 	/**
 	 * Tested object.
 	 */
-	MaxConverter converter;
+	DecimalMaxConverter converter;
 
 	@Before
 	public void setUp() {
-		converter = new MaxConverter();
+		converter = new DecimalMaxConverter();
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.converter.MaxConverter#annotationClassConverted()}
+	 * {@link MaxConverter#annotationClassConverted()}
 	 * .
 	 */
 	@Test
 	public void testAnnotationClassConverted() {
-		assertEquals(Max.class,
+		assertEquals(DecimalMax.class,
                 converter.annotationClassConverted());
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.converter.MaxConverter#fillConstrainedPropertyAttributes(java.lang.annotation.Annotation, java.util.Map, com.yannart.validation.model.ConstrainedProperty)}
+	 * {@link MaxConverter#fillConstrainedPropertyAttributes(java.lang.annotation.Annotation, java.util.Map, com.yannart.validation.model.ConstrainedProperty)}
 	 * .
 	 */
 	@Test
@@ -68,13 +67,14 @@ public class MaxConverterTest {
 		ConstrainedProperty property = new ConstrainedProperty("property");
 		Map<String, Object> attributeMap = new HashMap<>();
 
-		Max max = mock(Max.class);
-		when(max.value()).thenReturn(10L);
+        DecimalMax max = mock(DecimalMax.class);
+		when(max.value()).thenReturn( "10.0");
 
 		converter.fillConstrainedPropertyAttributes(max, attributeMap,
                 property);
-        assertEquals( 1, property.getAttributeMap().size());
-        assertEquals("10", property.getAttributeMap().get("max"));
+        assertEquals(2, property.getAttributeMap().size());
+		assertEquals("10.0", property.getAttributeMap().get("max"));
+        assertEquals("true", property.getAttributeMap().get("number"));
 	}
 
 }

@@ -15,66 +15,65 @@
  */
 package com.yannart.validation.converter;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.validation.constraints.Max;
-
+import com.yannart.validation.model.ConstrainedProperty;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.yannart.validation.model.ConstrainedProperty;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
- * Test for MaxConverter.
+ * Test for MinConverter.
  * 
  * @author Yann Nicolas
  */
-public class MaxConverterTest {
+public class DecimalMinConverterTest {
 
 	/**
 	 * Tested object.
 	 */
-	MaxConverter converter;
+    DecimalMinConverter converter;
 
 	@Before
 	public void setUp() {
-		converter = new MaxConverter();
+		converter = new DecimalMinConverter();
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.converter.MaxConverter#annotationClassConverted()}
+	 * {@link MinConverter#annotationClassConverted()}
 	 * .
 	 */
 	@Test
 	public void testAnnotationClassConverted() {
-		assertEquals(Max.class,
+		assertEquals(DecimalMin.class,
                 converter.annotationClassConverted());
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.yannart.validation.converter.MaxConverter#fillConstrainedPropertyAttributes(java.lang.annotation.Annotation, java.util.Map, com.yannart.validation.model.ConstrainedProperty)}
+	 * {@link MinConverter#fillConstrainedPropertyAttributes(java.lang.annotation.Annotation, java.util.Map, com.yannart.validation.model.ConstrainedProperty)}
 	 * .
 	 */
 	@Test
 	public void testFillConstrainedPropertyAttributes() {
-
 		ConstrainedProperty property = new ConstrainedProperty("property");
 		Map<String, Object> attributeMap = new HashMap<>();
 
-		Max max = mock(Max.class);
-		when(max.value()).thenReturn(10L);
+        DecimalMin min = mock( DecimalMin.class);
+		when(min.value()).thenReturn( "1.0");
 
-		converter.fillConstrainedPropertyAttributes(max, attributeMap,
+		converter.fillConstrainedPropertyAttributes(min, attributeMap,
                 property);
-        assertEquals( 1, property.getAttributeMap().size());
-        assertEquals("10", property.getAttributeMap().get("max"));
+        assertEquals(2, property.getAttributeMap().size());
+		assertEquals("1.0", property.getAttributeMap().get("min"));
+        assertEquals("true", property.getAttributeMap().get("number"));
 	}
 
 }
