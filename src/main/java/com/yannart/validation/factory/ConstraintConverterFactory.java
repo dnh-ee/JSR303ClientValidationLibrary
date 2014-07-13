@@ -15,16 +15,14 @@
  */
 package com.yannart.validation.factory;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import com.yannart.validation.JSR349ConstraintConverter;
 import com.yannart.validation.converter.MaxConverter;
 import com.yannart.validation.converter.MinConverter;
 import com.yannart.validation.converter.RequiredConverter;
 import com.yannart.validation.converter.SizeConverter;
+import org.reflections.Reflections;
 
 /**
  * Factory used to obtain the ConstraintConverters usable for a JSR303
@@ -37,13 +35,28 @@ public class ConstraintConverterFactory {
 	/**
 	 * Default converters.
 	 */
-	static JSR349ConstraintConverter[] converters = new JSR349ConstraintConverter[] {
-			new MaxConverter(),
-			new MinConverter(),
-			new RequiredConverter(),
-			new SizeConverter() };
+	static List<JSR349ConstraintConverter> converters;
 
-	/**
+    static {
+        Reflections reflections = new Reflections("com.yannart.validation.converter");
+
+        Set<Class<? extends JSR349ConstraintConverter>> converterClasses = reflections.getSubTypesOf(JSR349ConstraintConverter.class);
+
+        converters = new ArrayList<>();
+        for( Class<? extends JSR349ConstraintConverter> converterClass : converterClasses) {
+            converters.add( instantiateConverter( converterClass));
+        }
+    }
+
+    private static JSR349ConstraintConverter instantiateConverter(Class<? extends JSR349ConstraintConverter> converterClass) {
+        try {
+            return converterClass.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException( "Cannot create converter class", e);
+        }
+    }
+
+    /**
 	 * Map that is used for performance purposes and that allows finding all the
 	 * converters that can be used with a particular annotation.
 	 */
